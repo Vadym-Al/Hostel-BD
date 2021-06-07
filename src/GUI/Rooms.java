@@ -1,6 +1,7 @@
 package GUI;
 
 import BD.DatabaseHandler;
+import Interface.FormManager;
 
 import javax.swing.*;
 import java.awt.*;
@@ -8,7 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class Rooms extends JFrame {
-    public Rooms(){
+    public Rooms(final FormManager manager){
         DatabaseHandler databaseHandler = new DatabaseHandler();
         JPanel pane = new JPanel(new GridBagLayout());
         this.setTitle("Rooms");
@@ -21,41 +22,48 @@ public class Rooms extends JFrame {
         gbc.weighty = 1;
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        JTextField textField1 = new JTextField("Value");
+        JTextField textField0 = new JTextField("Number");
         gbc.gridx = 1;
         gbc.gridwidth = 2;
         gbc.gridy = 0;
+        pane.add(textField0, gbc);
+
+        JTextField textField1 = new JTextField("Value");
+        gbc.gridx = 1;
+        gbc.gridwidth = 2;
+        gbc.gridy = 1;
         pane.add(textField1, gbc);
 
         JTextField textField2 = new JTextField("Amount");
         gbc.gridx = 1;
         gbc.gridwidth = 2;
-        gbc.gridy = 1;
+        gbc.gridy = 2;
         pane.add(textField2, gbc);
 
         JTextField textField3 = new JTextField("Tools");
         gbc.gridx = 1;
         gbc.gridwidth = 2;
-        gbc.gridy = 2;
+        gbc.gridy = 3;
         pane.add(textField3, gbc);
 
         JTextField textField4 = new JTextField("Flour");
         gbc.gridx = 1;
         gbc.gridwidth = 2;
-        gbc.gridy = 3;
+        gbc.gridy = 4;
         pane.add(textField4, gbc);
 
         ActionListener input = (ActionEvent e) -> {
-            databaseHandler.fillInRoom(Integer.parseInt(textField1.getText()),Integer.parseInt(textField2.getText()),textField3.getText(),textField4.getText());
+            databaseHandler.fillInRoom(Integer.parseInt(textField0.getText()),Integer.parseInt(textField1.getText()),Integer.parseInt(textField2.getText()),textField3.getText(),textField4.getText());
         };
         ActionListener show = (ActionEvent e) -> {
             JOptionPane.showMessageDialog(null, databaseHandler.getInfoRoom().toString(),"Output",JOptionPane.PLAIN_MESSAGE);
         };
+        ActionListener swapRoom = (ActionEvent e) -> manager.swapRooms();
 
         JButton button1 = new JButton("Add Info");
         gbc.gridx = 1;
         gbc.gridwidth = 2;
-        gbc.gridy = 4;
+        gbc.gridy = 5;
         button1.addActionListener(input);
         pane.add(button1, gbc);
 
@@ -71,6 +79,13 @@ public class Rooms extends JFrame {
         gbc.gridwidth = 1;
         gbc.gridy = 1;
         pane.add(button3, gbc);
+
+        JButton button4 = new JButton("Return");
+        gbc.gridx = 6;
+        gbc.gridwidth = 1;
+        gbc.gridy = 2;
+        button4.addActionListener(swapRoom);
+        pane.add(button4, gbc);
 
         JLabel html1 = new JLabel("");
         gbc.gridx=4;

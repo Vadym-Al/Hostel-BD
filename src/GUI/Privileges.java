@@ -10,7 +10,7 @@ import java.awt.event.ActionListener;
 
 
 public class Privileges extends JFrame {
-    public Privileges(){
+    public Privileges(final FormManager manager){
         DatabaseHandler databaseHandler = new DatabaseHandler();
         JPanel pane = new JPanel(new GridBagLayout());
         this.setTitle("Privileges");
@@ -41,6 +41,7 @@ public class Privileges extends JFrame {
         ActionListener show = (ActionEvent e) -> {
             JOptionPane.showMessageDialog(null, databaseHandler.getInfoPriv().toString(),"Output",JOptionPane.PLAIN_MESSAGE);
         };
+        ActionListener swapPriv = (ActionEvent e) -> manager.swapPrivileges();
 
         JButton button1 = new JButton("Add Info");
         gbc.gridx = 1;
@@ -61,6 +62,13 @@ public class Privileges extends JFrame {
         gbc.gridwidth = 1;
         gbc.gridy = 1;
         pane.add(button3, gbc);
+
+        JButton button4 = new JButton("Return");
+        gbc.gridx = 6;
+        gbc.gridwidth = 1;
+        gbc.gridy = 2;
+        button4.addActionListener(swapPriv);
+        pane.add(button4, gbc);
 
         JLabel html1 = new JLabel("");
         gbc.gridx=4;

@@ -19,9 +19,9 @@ public class Main implements FormManager {
     public Main() {
         menu = new Menu(this);
         menu.setVisible(true);
-        privileges = new Privileges();
-        rooms = new Rooms();
-        students = new Students();
+        privileges = new Privileges(this);
+        rooms = new Rooms(this);
+        students = new Students(this);
     }
 
     @Override

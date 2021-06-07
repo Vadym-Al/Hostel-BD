@@ -27,23 +27,24 @@ public class DatabaseHandler {
             e.printStackTrace();
         }
     }
-    public void fillInRoom(int value, int amount, String tools, String flour){
-        String insert = "INSERT INTO rooms (value,ammount,tools,flour)"+" VALUES(?,?,?,?)";
+    public void fillInRoom(int number, int value, int amount, String tools, String flour){
+        String insert = "INSERT INTO rooms (room_n,value,ammount,tools,flour)"+" VALUES(?,?,?,?,?)";
 
         try {
             PreparedStatement prSt = getDbConnection().prepareStatement(insert);
-            prSt.setInt(1,value);
-            prSt.setInt(2,amount);
-            prSt.setString(3, tools);
-            prSt.setString(4,flour);
+            prSt.setInt(1,number);
+            prSt.setInt(2,value);
+            prSt.setInt(3,amount);
+            prSt.setString(4, tools);
+            prSt.setString(5,flour);
 
             prSt.executeUpdate();
         }catch (SQLException | ClassNotFoundException e){
             e.printStackTrace();
         }
     }
-    public void fillInStudents(String SNP, String birth_year, String gender, String adress, String group, String passport, String colonize_date){
-        String insert = "INSERT INTO students (snp,birth_year,gender,adress,group,passport,colonize_date)"+" VALUES(?,?,?,?,?,?,?)";
+    public void fillInStudents(String SNP, String birth_year, String gender, String adress, String group, int code, String passport, int room, String colonize_date){
+        String insert = "INSERT INTO students (snp,birth_year,gender,adress,groupe,privelege_code,passport,room,colonize_date)"+" VALUES(?,?,?,?,?,?,?,?,?)";
 
         try {
             PreparedStatement prSt = getDbConnection().prepareStatement(insert);
@@ -52,8 +53,10 @@ public class DatabaseHandler {
             prSt.setString(3,gender);
             prSt.setString(4,adress);
             prSt.setString(5,group);
-            prSt.setString(6,passport);
-            prSt.setString(7,colonize_date);
+            prSt.setInt(6,code);
+            prSt.setString(7,passport);
+            prSt.setInt(8,room);
+            prSt.setString(9,colonize_date);
 
             prSt.executeUpdate();
         }catch (SQLException | ClassNotFoundException e){
@@ -115,7 +118,7 @@ public class DatabaseHandler {
                 str.append(resultSet.getString("birth_year")+" ");
                 str.append(resultSet.getString("gender")+" ");
                 str.append(resultSet.getString("adress")+" ");
-                str.append(resultSet.getString("group")+" ");
+                str.append(resultSet.getString("groupe")+" ");
                 str.append(resultSet.getString("privelege_code")+" ");
                 str.append(resultSet.getString("passport")+" ");
                 str.append(resultSet.getString("room")+" ");
