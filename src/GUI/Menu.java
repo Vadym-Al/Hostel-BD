@@ -16,42 +16,81 @@ public class Menu extends JFrame {
         DatabaseHandler databaseHandler = new DatabaseHandler();
         this.manager = manager;
         this.setTitle("Main Menu");
-        this.setBounds(750, 350, 400, 100);
+        this.setBounds(750, 350, 350, 250);
         this.setResizable(false);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setContentPane(pane);
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.weightx = 1;
-        gbc.weighty = 4;
+        gbc.weighty = 1;
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        ActionListener swapPriv = (ActionEvent e) -> manager.swapPrivileges();
-        ActionListener swapRoom = (ActionEvent e) -> manager.swapRooms();
-        ActionListener swapStud = (ActionEvent e) -> manager.swapStudents();
-
-        JButton button1 = new JButton("Student");
-        gbc.gridx = 0;
-        gbc.gridwidth = 1;
+        String[] items = {
+           "Students",
+           "Rooms",
+           "Privileges"
+        };
+        JComboBox<String> jComboBox1 = new JComboBox<>(items);
+        gbc.gridx = 1;
+        gbc.gridwidth = 2;
         gbc.gridy = 0;
-        button1.addActionListener(swapStud);
+        pane.add(jComboBox1, gbc);
+
+        ActionListener show = (ActionEvent e) -> {
+            if (jComboBox1.getSelectedItem()=="Students"){
+                JOptionPane.showMessageDialog(null, databaseHandler.getInfoStudents().toString(),"Output",JOptionPane.PLAIN_MESSAGE);
+            }else if (jComboBox1.getSelectedItem()=="Rooms"){
+                JOptionPane.showMessageDialog(null, databaseHandler.getInfoRoom().toString(),"Output",JOptionPane.PLAIN_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(null, databaseHandler.getInfoPriv().toString(),"Output",JOptionPane.PLAIN_MESSAGE);
+            }
+        };
+        ActionListener SWAP = (ActionEvent e) -> {
+            if (jComboBox1.getSelectedItem()=="Students"){
+                manager.swapStudents();
+            }else if (jComboBox1.getSelectedItem()=="Rooms"){
+                manager.swapRooms();
+            } else {
+                manager.swapPrivileges();
+            }
+        };
+        ActionListener remove = (ActionEvent e) -> {
+            databaseHandler.ClearTable(jComboBox1.getSelectedItem().toString());
+        };
+        ActionListener sqlswap = (ActionEvent e) -> {
+            manager.swapSQL();
+        };
+
+        JButton button1 = new JButton("Edit");
+        gbc.gridx = 1;
+        gbc.gridwidth = 2;
+        gbc.gridy = 1;
+        button1.addActionListener(SWAP);
         pane.add(button1, gbc);
 
-        JButton button2 = new JButton("Room");
-        gbc.gridx = 2;
-        gbc.gridwidth = 1;
-        gbc.gridy = 0;
-        button2.addActionListener(swapRoom);
+        JButton button2 = new JButton("Clear");
+        gbc.gridx = 1;
+        gbc.gridwidth = 2;
+        gbc.gridy = 2;
+        button2.addActionListener(remove);
         pane.add(button2, gbc);
 
-        JButton button3 = new JButton("Benefits");
-        gbc.gridx = 4;
-        gbc.gridwidth = 1;
-        gbc.gridy = 0;
-        button3.addActionListener(swapPriv);
+        JButton button3 = new JButton("Show");
+        gbc.gridx = 1;
+        gbc.gridwidth = 2;
+        gbc.gridy = 3;
+        button3.addActionListener(show);
         pane.add(button3, gbc);
 
+        JButton button4 = new JButton("SQL");
+        gbc.gridx = 1;
+        gbc.gridwidth = 2;
+        gbc.gridy = 4;
+        button4.addActionListener(sqlswap);
+        pane.add(button4, gbc);
+
         JLabel label1 = new JLabel("");
-        gbc.gridx=1;
+        gbc.gridx=0;
         gbc.gridwidth=1;
         gbc.gridy=0;
         pane.add(label1,gbc);

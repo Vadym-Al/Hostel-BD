@@ -4,7 +4,6 @@ import java.sql.*;
 
 public class DatabaseHandler {
     Connection dbConnection;
-    String name = "priveleges";
 
     public Connection getDbConnection() throws ClassNotFoundException, SQLException {
         String connectionString = "jdbc:mysql://localhost:3306/hostel";
@@ -66,16 +65,16 @@ public class DatabaseHandler {
     public StringBuilder getInfoPriv(){
         ResultSet resultSet = null;
         StringBuilder str = new StringBuilder();
-        String select = "SELECT * FROM priveleges";
+        String select = "SELECT * FROM privileges";
 
         try {
             PreparedStatement prSt = getDbConnection().prepareStatement(select);
 
             resultSet = prSt.executeQuery();
             while (resultSet.next()){
-                str.append(resultSet.getString("privelege_code")+" ");
-                str.append(resultSet.getString("privelege_type")+" ");
-                str.append(resultSet.getString("discount")+"\n");
+                str.append(resultSet.getString("privelege_code")).append(" ");
+                str.append(resultSet.getString("privelege_type")).append(" ");
+                str.append(resultSet.getString("discount")).append("\n");
             }
         }catch (SQLException | ClassNotFoundException e){
             e.printStackTrace();
@@ -92,11 +91,11 @@ public class DatabaseHandler {
 
             resultSet = prSt.executeQuery();
             while (resultSet.next()){
-                str.append(resultSet.getString("room_n")+" ");
-                str.append(resultSet.getString("value")+" ");
-                str.append(resultSet.getString("ammount")+" ");
-                str.append(resultSet.getString("tools")+" ");
-                str.append(resultSet.getString("flour")+"\n");
+                str.append(resultSet.getString("room_n")).append(" ");
+                str.append(resultSet.getString("value")).append(" ");
+                str.append(resultSet.getString("ammount")).append(" ");
+                str.append(resultSet.getString("tools")).append(" ");
+                str.append(resultSet.getString("flour")).append("\n");
             }
         }catch (SQLException | ClassNotFoundException e){
             e.printStackTrace();
@@ -113,21 +112,40 @@ public class DatabaseHandler {
 
             resultSet = prSt.executeQuery();
             while (resultSet.next()){
-                str.append(resultSet.getString("student_code")+" ");
-                str.append(resultSet.getString("snp")+" ");
-                str.append(resultSet.getString("birth_year")+" ");
-                str.append(resultSet.getString("gender")+" ");
-                str.append(resultSet.getString("adress")+" ");
-                str.append(resultSet.getString("groupe")+" ");
-                str.append(resultSet.getString("privelege_code")+" ");
-                str.append(resultSet.getString("passport")+" ");
-                str.append(resultSet.getString("room")+" ");
-                str.append(resultSet.getString("colonize_date")+"\n");
+                str.append(resultSet.getString("student_code")).append(" ");
+                str.append(resultSet.getString("snp")).append(" ");
+                str.append(resultSet.getString("birth_year")).append(" ");
+                str.append(resultSet.getString("gender")).append(" ");
+                str.append(resultSet.getString("adress")).append(" ");
+                str.append(resultSet.getString("groupe")).append(" ");
+                str.append(resultSet.getString("privelege_code")).append(" ");
+                str.append(resultSet.getString("passport")).append(" ");
+                str.append(resultSet.getString("room")).append(" ");
+                str.append(resultSet.getString("colonize_date")).append("\n");
             }
         }catch (SQLException | ClassNotFoundException e){
             e.printStackTrace();
         }
         return str;
+    }
+    public void ClearTable(String table_name){
+        String delete = "TRUNCATE TABLE "+table_name;
+        try {
+            PreparedStatement prSt = getDbConnection().prepareStatement(delete);
+
+            prSt.executeUpdate();
+        }catch (SQLException | ClassNotFoundException e){
+            e.printStackTrace();
+        }
+    }
+    public void SQL(String insert){
+        try {
+            PreparedStatement prSt = getDbConnection().prepareStatement(insert);
+
+            prSt.executeUpdate();
+        }catch (SQLException | ClassNotFoundException e){
+            e.printStackTrace();
+        }
     }
 
 }

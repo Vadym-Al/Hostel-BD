@@ -4,5 +4,5 @@ public interface FormManager {
     void swapPrivileges();
     void swapRooms();
     void swapStudents();
-
+    void swapSQL();
 }
